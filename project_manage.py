@@ -1,9 +1,18 @@
 # import database module
 
 # define a funcion called initializing
+from database import Database, Table
 
 def initializing():
-    pass
+    # Create a Database object to read all CSV files
+    
+    db = Database()
+
+    login_table = db.create_table('login.csv')  
+
+   
+    db.add_table(login_table) 
+
 
 # here are things to do in this function:
 
@@ -19,7 +28,20 @@ def initializing():
 # define a funcion called login
 
 def login():
-    pass
+   
+    username = input("Enter your username: ")
+    password = input("Enter your password: ")
+
+   
+    login_table = db.get_table('login_info')  
+    login_data = login_table.data
+
+    for entry in login_data:
+        if entry['username'] == username and entry['password'] == password:
+            return [entry['ID'], entry['role']]
+
+    print("Invalid username or password.")
+    return None
 
 # here are things to do in this function:
    # add code that performs a login task
@@ -27,7 +49,9 @@ def login():
         # returns [ID, role] if valid, otherwise returning None
 
 # define a function called exit
+
 def exit():
+
     pass
 
 # here are things to do in this function:

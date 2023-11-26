@@ -9,8 +9,47 @@ persons = []
 with open(os.path.join(__location__, 'persons.csv')) as f:
     rows = csv.DictReader(f)
     for r in rows:
-        persons.append(dict(r))
-print(persons)
+        persons.append(dict(r)) 
+print(persons) 
+
+class Table:
+    def __init__(self, file_path, table_name):
+        self.file_path = file_path
+        self.table_name = table_name
+        self.data = []
+
+        # Load existing data from the CSV file
+        self._load_data()
+
+    def _load_data(self):
+        with open(self.file_path, 'r') as f:
+            rows = csv.DictReader(f)
+            self.data = [dict(row) for row in rows]
+
+    def _save_data(self):
+        with open(self.file_path, 'w', newline='') as f:
+            fieldnames = self.data[0].keys() if self.data else []
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+
+            writer.writeheader()
+            writer.writerows(self.data)
+
+    def insert_entry(self, entry):
+        self.data.append(entry)
+        self._save_data()
+
+    def update_entry(self, entry_key, key, value):
+        for row in self.data:
+            if row[entry_key] == key:
+                row[key] = value
+        self._save_data()
+class Database:
+    def __init__(self, file_path):
+        self.file_path = file_path
+
+    def create_table(self, table_name):
+        return Table(self.file_path, table_name)
+
 
 # add in code for a Database class
 
