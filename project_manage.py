@@ -3,16 +3,20 @@
 # define a funcion called initializing
 from database import Database, Table
 
+
 def initializing():
     # Create a Database object to read all CSV files
     
-    db = Database()
+    db = Database('login.csv')
 
-    login_table = db.create_table('login.csv')  
 
+    login_table = db.create_table('login_data')  
+    person = Table('persons.csv','person_table')
    
     db.add_table(login_table) 
+    db.add_table(person)
 
+    return db
 
 # here are things to do in this function:
 
@@ -25,6 +29,8 @@ def initializing():
     # add all these tables to the database
 
 
+    
+    
 # define a funcion called login
 
 def login():
@@ -33,7 +39,7 @@ def login():
     password = input("Enter your password: ")
 
    
-    login_table = db.get_table('login_info')  
+    login_table = db.search('login_data')  
     login_data = login_table.data
 
     for entry in login_data:
@@ -47,6 +53,7 @@ def login():
    # add code that performs a login task
         # ask a user for a username and password
         # returns [ID, role] if valid, otherwise returning None
+
 
 # define a function called exit
 
@@ -63,8 +70,24 @@ def exit():
 
 # make calls to the initializing and login functions defined above
 
-initializing()
+db = initializing()
+print 
 val = login()
+
+if val[1] == 'admin':
+    print('Manageing Database')
+
+ 
+elif val[1] == 'student':
+    
+elif val[1] == 'member':
+    
+elif val[1] == 'lead':
+    
+elif val[1] == 'faculty':
+    
+elif val[1] == 'advisor':
+    
 
 # based on the return value for login, activate the code that performs activities according to the role defined for that person_id
 

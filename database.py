@@ -46,11 +46,17 @@ class Table:
 class Database:
     def __init__(self, file_path):
         self.file_path = file_path
-
+        self.database = []
     def create_table(self, table_name):
         return Table(self.file_path, table_name)
 
-
+    def search(self, table_name):
+        for table in self.database:
+            if table.table_name == table_name:
+                return table
+        return None
+    def add_table(self, table):
+        self.database.append(table)
 # add in code for a Database class
 
 # add in code for a Table class
