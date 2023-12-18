@@ -2,7 +2,7 @@
 
 # define a funcion called initializing
 from database import Database, Table
-
+import random
 
 def initializing():
     # Create a Database object to read all CSV files
@@ -44,7 +44,7 @@ def login():
 
     for entry in login_data:
         if entry['username'] == username and entry['password'] == password:
-            return [entry['ID'], entry['role']]
+            return [entry['ID'], entry['role'],entry['username'],entry['password']]
 
     print("Invalid username or password.")
     return None
@@ -69,19 +69,45 @@ def exit():
 
 
 # make calls to the initializing and login functions defined above
-
+projectlist = []
 db = initializing()
 print 
 val = login()
 
 if val[1] == 'admin':
-    print('Manageing Database')
-
+    print('Managing Project')
+    print('')
  
 elif val[1] == 'student':
-    
-elif val[1] == 'member':
-    
+    while True:
+        print('Managing Project')
+        print('1:Creating new project')
+        print('2:Accept request')
+        print('3:Endprogram')
+        choice = int(input('What you do'))
+        if not isinstance(choice,int):
+            raise TypeError('You must enter 1 or 2 or 3')
+        if choice == 1:
+            b = {}
+            namep = input("naming your project: ")
+            b["Projectname"] = namep
+            b["Project lead"] = val[2]
+            login_table = db.search('login_data')  
+            login_data = login_table.data
+            for entry in login_data:
+                if entry['username'] == val[2] and entry['password'] == val[3]:
+                    entry['role'] == "Lead"
+                    login_data._save_data
+                    projectlist.append(b)
+        if choice == 2:
+            pname = input('Your Team project name:')
+            for i in projectlist:
+                if i["Projectname"] == pname:
+                    num = random.randint(1,99999)
+                    i[f'Member{num}'] == val[2]
+        if choice == 3:
+            exit()
+
 elif val[1] == 'lead':
     
 elif val[1] == 'faculty':

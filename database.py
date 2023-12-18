@@ -57,6 +57,7 @@ class Database:
         return None
     def add_table(self, table):
         self.database.append(table)
+    
 # add in code for a Database class
 
 # add in code for a Table class
